@@ -1,9 +1,8 @@
 {
-  "name": "Saiot",
+  "name": "Smart Automation using IoT",
   "short_name": "Saiot",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "theme_color": "#006064",
   "background_color": "#006064",
   "description": "Um simples app para monitoramento e controle dos dispositivos da sua residência.",
