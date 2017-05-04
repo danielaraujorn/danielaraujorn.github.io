@@ -1,4 +1,4 @@
-body{background-color:#ddd!important;margin:0;padding:0 0 70px;font-family:sans-serif}.botao{margin:5px;float:right}.elemento{margin:5px 0}.botaoadd{position:fixed;z-index:1;right:10px;bottom:10px}/*!
+body{background-color:#ddd!important;margin:0;padding:0 0 70px;font-family:sans-serif}.botao{margin:5px !important;float:right}.elemento{margin:5px 0}.botaoadd{position:fixed;z-index:1;right:10px;bottom:10px}/*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2017 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
