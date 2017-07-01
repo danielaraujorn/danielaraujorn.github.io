@@ -1,5 +1,31 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Saiot</title><meta name="author" content="Matthew Howell"/><meta name="description" content="fullPage continuous scrolling demo."/><meta name="keywords" content="fullpage,jquery,demo,scroll,loop,continuous"/><meta name="Resource-type" content="Document"/><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="./jquery.fullPage.css"/><link rel="stylesheet" href="./styles.css"/><!--[if IE]>
-    <script type="text/javascript">
-       var console = { log: function() {} };
-    </script>
-  <![endif]--><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script><script type="text/javascript" src="./scrolloverflow.min.js"></script><script type="text/javascript" src="./jquery.fullPage.min.js"></script><link href="/static/css/main.2479ffe8.css" rel="stylesheet"></head><body><div id="root"><div id="fullpage"><div style="backgroundColor:#006064" classname="section " id="section0"><img src="static/media/logo.fdb5b07a.svg" style="width:90px;margin-bottom:-20px" alt="saiot"/></div></div></div><script type="text/javascript">$(document).ready(function(){$("#fullpage").fullpage({navigation:!0,navigationPosition:"right",continuousVertical:!0})})</script><script async src="./sw.js"></script><script async type="text/javascript">var CACHE_VERSION=1,CURRENT_CACHES={font:"font-cache-v"+CACHE_VERSION},urlsToCache=["/static/css/main.2479ffe8.css","/static/js/main.fe05108c.js","/static/media/logo.fdb5b07a.svg","/index.html","/favicon.ico","jquery.fullPage.min.js","jquery.fullPage.css","scrolloverflow.min.js","sw.js","styles.css"];self.addEventListener("install",function(e){e.waitUntil(caches.open(CURRENT_CACHES).then(function(e){return e.addAll(urlsToCache)}))}),self.addEventListener("activate",function(e){var n=Object.keys(CURRENT_CACHES).map(function(e){return CURRENT_CACHES[e]});e.waitUntil(caches.keys().then(function(e){return Promise.all(e.map(function(e){if(-1==n.indexOf(e))return console.log("Deleting out of date cache:",e),caches.delete(e)}))}))}),self.addEventListener("fetch",function(e){console.log("Handling fetch event for",e.request.url),e.respondWith(caches.open(CURRENT_CACHES.font).then(function(n){return n.match(e.request).then(function(e){if(e)return console.log(" Found response in cache:",e),e}).catch(function(e){throw console.error("  Error in fetch handler:",e),e})}))})</script><script type="text/javascript" src="/static/js/main.fe05108c.js"></script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Not here</title>
+</head>
+<body>
+ <h1 id="demo">Teste</h1>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+ <script type="text/javascript">
+  var socket=io('http://192.168.1.128:3000');
+	var x = document.getElementById("demo");
+	function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(sendPosition);
+	    } else {
+	        x.innerHTML = "Não suporta"
+	    }
+	}
+	function sendPosition(position) {
+		x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+		var location={
+			lat:position.coords.latitude,
+			lgn:position.coords.longitude
+		}
+ 		socket.emit('/put/posicao/',location)
+	}
+	getLocation()
+ </script>
+</body>
+</html>
