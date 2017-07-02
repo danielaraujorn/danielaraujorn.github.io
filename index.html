@@ -3,12 +3,14 @@
 <head>
 	<title>Not here</title>
 </head>
-<body>
- <h1 id="demo">Teste</h1>
+<body style="margin:0">
+ <div id="googleMap" style="width:100vw;height:100vh;"></div>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
  <script type="text/javascript">
   var socket=io('https://2680325e.ngrok.io');
-	var x = document.getElementById("demo");
+	var map=null;
+	var globalMarkers=[];
+	var myip = null;
 	function getLocation() {
 	    if (navigator.geolocation) {
 	        navigator.geolocation.getCurrentPosition(sendPosition);
@@ -16,16 +18,88 @@
 	        x.innerHTML = "Não suporta"
 	    }
 	}
+	getLocation()
+
 	function sendPosition(position) {
-		x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
+		console.log("Latitude: ",position.coords.latitude,"Longitude: ",position.coords.longitude)
 		var location={
 			lat:position.coords.latitude,
-			lgn:position.coords.longitude
+			lng:position.coords.longitude
 		}
  		socket.emit('/put/posicao/',location)
+		map = new google.maps.Map(document.getElementById('googleMap'), {
+      zoom: 12,
+      center: {lat:position.coords.latitude, lng:position.coords.longitude},
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_CENTER
+      },
+      zoomControl: true,
+      zoomControlOptions: {
+          position: google.maps.ControlPosition.LEFT_CENTER
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      streetViewControlOptions: {
+          position: google.maps.ControlPosition.LEFT_TOP
+      },
+      fullscreenControl: true
+    }); 
+    var mylocal= new google.maps.Marker({
+        position:{lat:position.coords.latitude, lng:position.coords.longitude},
+        map: map,
+			  icon: "./azul.png"
+    });   
 	}
-	getLocation()
- </script>
+
+	function addMarker(markers) {
+			for (var i = 0; i < markers.length; i++) {
+	      if(markers[i].ip!==myip){
+	      	if(markers[i].now){
+			      globalMarkers[i]= new google.maps.Marker({
+				        position:markers[i],
+				        map: map,
+				        icon: "./vermelho.png"
+				    });
+		    	}else{
+			      globalMarkers[i]= new google.maps.Marker({
+				        position:markers[i],
+				        map: map,
+				        icon: "./cinza.png"
+				    });
+		    	}
+	      }
+	    }
+			console.log(markers);
+	}
+	//Listen for other players' markers
+	socket.on('markers', addMarker);
+	socket.on('returnip',function(ip){
+		myip=ip
+	})
+  function myMap() {
+    map = new google.maps.Map(document.getElementById('googleMap'), {
+      zoom: 12,
+      center: {lat: -28.643387, lng: 153.612224},
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_CENTER
+      },
+      zoomControl: true,
+      zoomControlOptions: {
+          position: google.maps.ControlPosition.LEFT_CENTER
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      streetViewControlOptions: {
+          position: google.maps.ControlPosition.LEFT_TOP
+      },
+      fullscreenControl: true
+    });
+  }
+</script>
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6a1HC1S41V9-Nxbe5UVdMcHePWrCxsMA&callback=myMap"></script>
 </body>
 </html>
