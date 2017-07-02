@@ -10,7 +10,7 @@
   var socket=io('https://ourlocal.herokuapp.com');
 	var map=null;
 	var globalMarkers=[];
-	var globakPositions=[];
+	var globalPositions=[];
 	var myip = null;
 	function getLocation() {
 	    if (navigator.geolocation) {
@@ -59,7 +59,7 @@
 	function addMarker(markers) {
 			for (var i = 0; i < markers.length; i++) {
 	      if(markers[i].ip!==myip){
-	      	globakPositions[i]=markers[i]
+	      	globalPositions[i]=markers[i]
 	      	if(markers[i].now){
 			      globalMarkers[i]= new google.maps.Marker({
 				        position:markers[i],
@@ -80,8 +80,8 @@
 	function addNewMarker(marker) {
 			console.log("new ",marker);
 			var isnew = true
-			for (var i = 0; i < globakPositions.length; i++) {
-	      if(globakPositions[i].ip===marker.ip&&marker.ip!==myip){
+			for (var i = 0; i < globalPositions.length; i++) {
+	      if(globalPositions[i].ip===marker.ip&&marker.ip!==myip){
 	      	isnew=false
 	      	if(marker.now){
 			      globalMarkers[i]= new google.maps.Marker({
@@ -101,13 +101,13 @@
 	    }
 	    if(isnew){
 	    	if(marker.now){
-		      globalMarkers[globakPositions.length]= new google.maps.Marker({
+		      globalMarkers[globalPositions.length]= new google.maps.Marker({
 			        position:marker,
 			        map: map,
 			        icon: "./vermelho.png"
 			    });
 	    	}else{
-		      globalMarkers[globakPositions.length]= new google.maps.Marker({
+		      globalMarkers[globalPositions.length]= new google.maps.Marker({
 			        position:marker,
 			        map: map,
 			        icon: "./cinza.png"
