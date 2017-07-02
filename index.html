@@ -10,6 +10,7 @@
   var socket=io('https://ourlocal.herokuapp.com');
 	var map=null;
 	var globalMarkers=[];
+	var globakPositions=[];
 	var myip = null;
 	function getLocation() {
 	    if (navigator.geolocation) {
@@ -58,6 +59,7 @@
 	function addMarker(markers) {
 			for (var i = 0; i < markers.length; i++) {
 	      if(markers[i].ip!==myip){
+	      	globakPositions[i]=markers[i]
 	      	if(markers[i].now){
 			      globalMarkers[i]= new google.maps.Marker({
 				        position:markers[i],
@@ -75,7 +77,46 @@
 	    }
 			console.log(markers);
 	}
+	function addNewMarker(marker) {
+			var isnew = true
+			for (var i = 0; i < globakPositions.length; i++) {
+	      if(globakPositions[i].ip===marker.ip&&marker.ip!==myip){
+	      	isnew=false
+	      	if(marker.now){
+			      globalMarkers[i]= new google.maps.Marker({
+				        position:marker,
+				        map: map,
+				        icon: "./vermelho.png"
+				    });
+		    	}else{
+			      globalMarkers[i]= new google.maps.Marker({
+				        position:marker,
+				        map: map,
+				        icon: "./cinza.png"
+				    });
+		    	}
+		    	break;
+	      }
+	    }
+	    if(isnew){
+	    	if(marker.now){
+		      globalMarkers[globakPositions.length]= new google.maps.Marker({
+			        position:marker,
+			        map: map,
+			        icon: "./vermelho.png"
+			    });
+	    	}else{
+		      globalMarkers[globakPositions.length]= new google.maps.Marker({
+			        position:marker,
+			        map: map,
+			        icon: "./cinza.png"
+			    });
+	    	}
+	    }
+			console.log(markers);
+	}
 	//Listen for other players' markers
+	socket.on('newMarker',addNewMarker)
 	socket.on('markers', addMarker);
 	socket.on('returnip',function(ip){
 		myip=ip
