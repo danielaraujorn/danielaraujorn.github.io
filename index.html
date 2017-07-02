@@ -11,18 +11,20 @@
 	var map=null;
 	var globalMarkers=[];
 	var myip = null;
+	var location = {lat: -28.643387, lng: 153.612224};
 	function getLocation() {
 	    if (navigator.geolocation) {
 	        navigator.geolocation.getCurrentPosition(sendPosition);
 	    } else {
 	        x.innerHTML = "Não suporta"
+    		socket.emit('getMarkers',location)
 	    }
 	}
 	getLocation()
 
 	function sendPosition(position) {
 		console.log("Latitude: ",position.coords.latitude,"Longitude: ",position.coords.longitude)
-		var location={
+		location={
 			lat:position.coords.latitude,
 			lng:position.coords.longitude
 		}
@@ -51,6 +53,7 @@
         map: map,
 			  icon: "./azul.png"
     });   
+    socket.emit('getMarkers',location)
 	}
 
 	function addMarker(markers) {
@@ -81,7 +84,7 @@
   function myMap() {
     map = new google.maps.Map(document.getElementById('googleMap'), {
       zoom: 12,
-      center: {lat: -28.643387, lng: 153.612224},
+      center: location,
       mapTypeControl: true,
       mapTypeControlOptions: {
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
