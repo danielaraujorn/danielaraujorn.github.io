@@ -58,8 +58,8 @@
 
 	function addMarker(markers) {
 			for (var i = 0; i < markers.length; i++) {
+	      globalPositions[i]=markers[i]
 	      if(markers[i].ip!==myip){
-	      	globalPositions[i]=markers[i]
 	      	if(markers[i].now){
 			      globalMarkers[i]= new google.maps.Marker({
 				        position:markers[i],
@@ -78,7 +78,8 @@
 			console.log(markers);
 	}
 	function addNewMarker(marker) {
-			console.log("new ",marker);
+		console.log("new ",marker);
+		if(marker!==null&&marker!==undefined){
 			var isnew = true
 			for (var i = 0; i < globalPositions.length; i++) {
 				console.log("global",globalPositions[i]);
@@ -116,6 +117,7 @@
 	    	}
 	    }
 			console.log(markers);
+		}
 	}
 	//Listen for other players' markers
 	socket.on('newMarker',addNewMarker)
