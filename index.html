@@ -78,11 +78,10 @@
 			console.log(markers);
 	}
 	function addNewMarker(marker) {
-		console.log("new ",marker);
+		console.log("new ",marker,globalPositions);
 		if(marker!==null&&marker!==undefined){
 			var isnew = true
 			for (var i = 0; i < globalPositions.length; i++) {
-				console.log("global",globalPositions[i]);
 	      if(globalPositions[i].ip===marker.ip&&marker.ip!==myip){
 	      	isnew=false
 	      	if(marker.now){
@@ -102,6 +101,7 @@
 	      }
 	    }
 	    if(isnew){
+	    	globalPositions[globalPositions.length]=marker
 	    	if(marker.now){
 		      globalMarkers[globalPositions.length]= new google.maps.Marker({
 			        position:marker,
@@ -116,7 +116,6 @@
 			    });
 	    	}
 	    }
-			console.log(markers);
 		}
 	}
 	//Listen for other players' markers
