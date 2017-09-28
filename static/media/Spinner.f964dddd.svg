@@ -1,4 +1,0 @@
-<svg class="lds-spinner" width="186px"  height="186px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;">>
-  <rect id="my-rec" width="186" height="186" fill="#ddd" />
-  <animate xlink:href="#my-rec" attributeName="opacity" from="1" to="0.2" dur="700ms" repeatCount="indefinite" />
-</svg>
